@@ -1,7 +1,7 @@
 {
   "name": "react-native-android-notification-listener",
   "title": "React Native Android Notification Listener",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native Android Notification Listener - Listen for status bar notifications from all applications",
   "main": "index.js",
   "scripts": {
