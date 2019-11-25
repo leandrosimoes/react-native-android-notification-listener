@@ -31,6 +31,8 @@ public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaMod
 
     @ReactMethod
     public void getPermissionStatus(Promise promise) {
+        if (reactContext == null) return;
+        
         String packageName = reactContext.getPackageName();
         Set<String> enabledPackages = NotificationManagerCompat.getEnabledListenerPackages(reactContext);
         if (enabledPackages.contains(packageName)) {
@@ -42,6 +44,8 @@ public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaMod
     
     @ReactMethod
     public void requestPermission() {
+        if (reactContext == null) return;
+
         final Intent i = new Intent();
         i.setAction(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -55,6 +59,8 @@ public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaMod
     public void onNewIntent(Intent intent){}
 
     public static void sendEvent(String event, WritableMap params) {
+        if (reactContext == null) return;
+
         reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(event, params);

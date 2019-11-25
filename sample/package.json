@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.2",
-    "react-native-android-notification-listener": "1.0.0"
+    "react-native-android-notification-listener": "file:../"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

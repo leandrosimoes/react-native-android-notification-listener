@@ -5080,7 +5080,7 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
 
 "react-native-android-notification-listener@file:..":
-  version "1.0.0"
+  version "1.0.2"
 
 react-native@0.61.2:
   version "0.61.2"
