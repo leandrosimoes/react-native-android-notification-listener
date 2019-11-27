@@ -19,14 +19,17 @@ import java.util.Set;
 
 public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaModule {
     private static ReactApplicationContext reactContext;
+    private static final String TAG = "RNAndroidNotificationListener";
 
     public RNAndroidNotificationListenerModule(ReactApplicationContext context) {
         super(context);
+        
         reactContext = context;
     }
 
+    @Override
     public String getName() {
-        return "RNAndroidNotificationListener";
+        return TAG;
     }
 
     @ReactMethod
@@ -53,10 +56,6 @@ public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaMod
         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         reactContext.startActivity(i);
     }
-
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {}
-
-    public void onNewIntent(Intent intent){}
 
     public static void sendEvent(String event, WritableMap params) {
         if (reactContext == null) return;

@@ -16,14 +16,16 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
     public void onNotificationPosted(StatusBarNotification sbn) {
         Notification notification = sbn.getNotification();
         String app = sbn.getPackageName();
+
+        if (notification.extras.getCharSequence(Notification.EXTRA_TITLE) == null) return;
+        if (notification.extras.getCharSequence(Notification.EXTRA_TEXT) == null) return;
+        
         String title = notification.extras.getCharSequence(Notification.EXTRA_TITLE).toString();
         String text = notification.extras.getCharSequence(Notification.EXTRA_TEXT).toString();
 
-        Log.d(TAG, "Notification received: "+app+" | "+title+" | "+text);
+        if (text == null) return;
 
-        if (text == null) {
-            return;
-        }
+        Log.d(TAG, "Notification received: " + app + " | " + title + " | " + text);
 
         WritableMap params = Arguments.createMap();
         params.putString("app", app);
