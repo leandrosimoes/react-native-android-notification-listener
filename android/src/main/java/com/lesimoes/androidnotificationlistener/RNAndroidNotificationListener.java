@@ -15,15 +15,22 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Notification notification = sbn.getNotification();
+
+        if (notification == null || notification.extras == null) return;
+        
         String app = sbn.getPackageName();
 
-        if (notification.extras.getCharSequence(Notification.EXTRA_TITLE) == null) return;
-        if (notification.extras.getCharSequence(Notification.EXTRA_TEXT) == null) return;
-        
-        String title = notification.extras.getCharSequence(Notification.EXTRA_TITLE).toString();
-        String text = notification.extras.getCharSequence(Notification.EXTRA_TEXT).toString();
+        if (app == null) app = "Unknown";
 
-        if (text == null) return;
+        CharSequence titleChars = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
+        CharSequence textChars = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
+
+        if (titleChars == null || textChars == null) return;
+        
+        String title = titleChars.toString();
+        String text = textChars.toString();
+
+        if (text == null || text == "" || title == null || title == "") return;
 
         Log.d(TAG, "Notification received: " + app + " | " + title + " | " + text);
 
