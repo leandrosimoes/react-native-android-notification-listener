@@ -22,8 +22,8 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
 
         if (app == null) app = "Unknown";
 
-        CharSequence titleChars = notification.extras.getCharSequence(Notification.EXTRA_TITLE)
-        CharSequence textChars = notification.extras.getCharSequence(Notification.EXTRA_TEXT)
+        CharSequence titleChars = notification.extras.getCharSequence(Notification.EXTRA_TITLE);
+        CharSequence textChars = notification.extras.getCharSequence(Notification.EXTRA_TEXT);
 
         if (titleChars == null || textChars == null) return;
         
