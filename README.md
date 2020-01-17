@@ -2,7 +2,9 @@
 
 React Native Android Notification Listener is a library that allows you to listen for status bar notifications from all applications. (Android Only)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bfbf75b8e92f446481f5ce4b0d077b0b)](https://app.codacy.com/manual/leandrosimoes/react-native-android-notification-listener?utm_source=github.com&utm_medium=referral&utm_content=leandrosimoes/react-native-android-notification-listener&utm_campaign=Badge_Grade_Dashboard)
 [![npm version](https://badge.fury.io/js/react-native-android-notification-listener.svg)](https://badge.fury.io/js/react-native-android-notification-listener)
+![Node.js Package](https://github.com/leandrosimoes/react-native-android-notification-listener/workflows/Node%2Ejs%20Package/badge.svg)
 
 ## Getting started
 
