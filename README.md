@@ -44,8 +44,8 @@ console.log(status) // Result can be 'authorized' or 'denied'
 // To open the Android configuration page, where the user can set the permissions
 RNAndroidNotificationListener.requestPermission()
 
-// To handle the notification received
-const headlessNotificationListener = notification => {
+// ATTENTION: THIS FUNCTION MUST BE ASYNCRONOUS
+const headlessNotificationListener = async (notification) => {
 	const { app, title, text } = notification
 
 	...
@@ -59,6 +59,15 @@ For more details, se the `sample/` project in this repository
 
 ## FAQ
 
+"There are some limitations regarding the use of the Headless JS by this module that I should care about?"
+
+Yes, there are some nuances that you should consern. For example, since Headless JS runs in a standalone "Task" you can't interact directly with it by the touch UI. 
+For more information about using Headless JS in React Native, I sugest to you to take a look at the official documentation [here](https://reactnative.dev/docs/headless-js-android).
+
+---
+
 "I keep receiving the warning `registerHeadlessTask or registerCancellableHeadlessTask called multiple times for same key '${taskKey}'`, is that a problem?
 
 No, this warning is here, where you can see that the task providers are stored in a set, and there's no way to delete them, so react is just complaining about the fact that we are overwriting it.
+
+---
