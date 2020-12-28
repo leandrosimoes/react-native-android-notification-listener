@@ -34,6 +34,7 @@ React Native Android Notification Listener is a library that allows you to liste
 
 ## Usage
 ```javascript
+import { AppRegistry } from 'react-native'
 import RNAndroidNotificationListener from 'react-native-android-notification-listener';
 
 // To check if the user has permission
@@ -44,14 +45,20 @@ console.log(status) // Result can be 'authorized' or 'denied'
 RNAndroidNotificationListener.requestPermission()
 
 // To handle the notification received
-const handleIncomingNotifications = notification => {
+const headlessNotificationListener = notification => {
 	const { app, title, text } = notification
 
 	...
 }
 
 // To listen to all status bar notifications
-RNAndroidNotificationListener.onNotificationReceived(handleIncomingNotifications)
+AppRegistry.registerHeadlessTask('RNAndroidNotificationListenerHeadlessJs',	() => headlessNotificationListener)
 ```
 
 For more details, se the `sample/` project in this repository
+
+## FAQ
+
+"I keep receiving the warning `registerHeadlessTask or registerCancellableHeadlessTask called multiple times for same key '${taskKey}'`, is that a problem?
+
+No, this warning is here, where you can see that the task providers are stored in a set, and there's no way to delete them, so react is just complaining about the fact that we are overwriting it.
