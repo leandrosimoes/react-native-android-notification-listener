@@ -11,7 +11,7 @@ export default StyleSheet.create({
         fontSize: 18,
     },
     notification: {
-        width: 200,
+        width: 300,
         backgroundColor: '#f2f2f2',
         padding: 20,
         marginTop: 20,

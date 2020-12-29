@@ -39,19 +39,28 @@ import RNAndroidNotificationListener from 'react-native-android-notification-lis
 
 // To check if the user has permission
 const status = await RNAndroidNotificationListener.getPermissionStatus()
-console.log(status) // Result can be 'authorized' or 'denied'
+console.log(status) // Result can be 'authorized', 'denied' or 'unknown'
 
-// To open the Android configuration page, where the user can set the permissions
+// To open the Android settings so the user can enable it
 RNAndroidNotificationListener.requestPermission()
 
-// ATTENTION: THIS FUNCTION MUST BE ASYNCRONOUS
+/**
+ * Note that this method MUST return a Promise.
+ * Is that why I'm using a async function here.
+ */
 const headlessNotificationListener = async (notification) => {
 	const { app, title, text } = notification
 
 	...
 }
 
-// To listen to all status bar notifications
+/**
+ * This should be required early in the require sequence
+ * to make sure the JS execution environment is setup before other
+ * modules are required.
+ * 
+ * Your entry file (index.js) would be the better place for it.
+ */
 AppRegistry.registerHeadlessTask('RNAndroidNotificationListenerHeadlessJs',	() => headlessNotificationListener)
 ```
 
