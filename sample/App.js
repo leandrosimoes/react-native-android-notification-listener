@@ -1,96 +1,83 @@
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  Button,
-  AppState,
-  View,
-} from 'react-native';
-import RNAndroidNotificationListener from 'react-native-android-notification-listener';
+import React, { useState, useEffect } from 'react'
+import { SafeAreaView, Text, Button, AppState, View } from 'react-native'
+import RNAndroidNotificationListener from 'react-native-android-notification-listener'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import styles from './App.styles.js'
+
+let interval = null
 
 const App = () => {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [lastNotification, setLastNotification] = useState(null);
+    const [hasPermission, setHasPermission] = useState(false)
+    const [lastNotification, setLastNotification] = useState(null)
 
-  const handleOnPressPermissionButton = async () => {
-    RNAndroidNotificationListener.requestPermission();
-  };
+    const handleOnPressPermissionButton = async () => {
+        /**
+         * Open the notification settings so the user
+         * so the user can enable it
+         */
+        RNAndroidNotificationListener.requestPermission()
+    }
 
-  const handleAppStateChange = async nextAppState => {
-    RNAndroidNotificationListener.getPermissionStatus().then(status => {
-      setHasPermission(status !== 'denied');
-    });
-  };
+    const handleAppStateChange = async nextAppState => {
+        if (nextAppState === 'active') {
+            /**
+             * Check the user current notification permission status
+             */
+            RNAndroidNotificationListener.getPermissionStatus().then(status => {
+                setHasPermission(status !== 'denied')
+            })
+        }
+    }
 
-  const handleNotificationReceived = notification => {
-    setLastNotification(notification);
-  };
+    const handleCheckNotificationInterval = async () => {
+        const lastStoredNotification = await AsyncStorage.getItem('@lastNotification')
 
-  useEffect(() => {
-    RNAndroidNotificationListener.getPermissionStatus().then(status => {
-      setHasPermission(status !== 'denied');
-    });
+        if (lastStoredNotification) {
+            setLastNotification(JSON.parse(lastStoredNotification))
+        }
+    }
 
-    RNAndroidNotificationListener.onNotificationReceived(
-      handleNotificationReceived,
-    );
+    useEffect(() => {
+        AppState.addEventListener('change', handleAppStateChange)
 
-    AppState.addEventListener('change', handleAppStateChange);
+        clearInterval(interval)
 
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+        /**
+         * Just setting a interval to check if
+         * there is a notification in AsyncStorage
+         * so I can show it in the application
+         */
+        interval = setInterval(handleCheckNotificationInterval, 3000)
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text
-        style={[
-          styles.permissionStatus,
-          {color: hasPermission ? 'green' : 'red'},
-        ]}>
-        {hasPermission
-          ? 'Allowed to handle notifications'
-          : 'NOT allowed to handle notifications'}
-      </Text>
-      <Button
-        title={'Open Configuration'}
-        onPress={handleOnPressPermissionButton}
-      />
-      {lastNotification && (
-        <View style={styles.notification}>
-          <Text style={styles.notificationTitle}>Last Notification</Text>
-          <Text>{lastNotification.app}</Text>
-          <Text>{lastNotification.title}</Text>
-          <Text>{lastNotification.text}</Text>
-        </View>
-      )}
-    </SafeAreaView>
-  );
-};
+        return () => {
+            clearInterval(interval)
+            AppState.removeEventListener('change', handleAppStateChange)
+        }
+    }, [])
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  permissionStatus: {
-    marginBottom: 20,
-    fontSize: 18,
-  },
-  notification: {
-    width: 200,
-    backgroundColor: '#f2f2f2',
-    padding: 20,
-    marginTop: 20,
-    borderRadius: 5,
-    elevation: 2,
-  },
-  notificationTitle: {
-    fontWeight: 'bold',
-  },
-});
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={[styles.permissionStatus, { color: hasPermission ? 'green' : 'red' }]}>
+                {hasPermission
+                    ? 'Allowed to handle notifications'
+                    : 'NOT allowed to handle notifications'}
+            </Text>
+            <Button
+                title='Open Configuration'
+                onPress={handleOnPressPermissionButton}
+                disabled={hasPermission}
+            />
+            {lastNotification && (
+                <View style={styles.notification}>
+                    <Text style={styles.notificationTitle}>Last Notification</Text>
+                    <Text>{lastNotification.app}</Text>
+                    <Text>{lastNotification.title}</Text>
+                    <Text>{lastNotification.text}</Text>
+                </View>
+            )}
+        </SafeAreaView>
+    )
+}
 
-export default App;
+export default App

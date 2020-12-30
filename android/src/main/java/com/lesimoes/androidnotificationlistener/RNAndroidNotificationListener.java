@@ -1,13 +1,14 @@
  
 package com.lesimoes.androidnotificationlistener;
 
+import android.content.Intent;
+import android.content.Context;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.app.Notification;
 import android.util.Log;
 
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Arguments;
+import com.facebook.react.HeadlessJsTaskService;
 
 public class RNAndroidNotificationListener extends NotificationListenerService {
     private static final String TAG = "RNAndroidNotificationListener";
@@ -30,16 +31,20 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String title = titleChars.toString();
         String text = textChars.toString();
 
-        if (text == null || text == "" || title == null || title == "") return;
+        if (text == null || "".equals(text) || title == null || "".equals(title)) return;
 
         Log.d(TAG, "Notification received: " + app + " | " + title + " | " + text);
+        
+        Context context = getApplicationContext();
 
-        WritableMap params = Arguments.createMap();
-        params.putString("app", app);
-        params.putString("title", title);
-        params.putString("text", text);
+        Intent serviceIntent = new Intent(context, RNAndroidNotificationListenerHeadlessJsTaskService.class);
+        serviceIntent.putExtra("app", app);
+        serviceIntent.putExtra("title", title);
+        serviceIntent.putExtra("text", text);
 
-        RNAndroidNotificationListenerModule.sendEvent("notificationReceived", params);
+        HeadlessJsTaskService.acquireWakeLockNow(context);
+
+        context.startService(serviceIntent);
     }
 
     @Override

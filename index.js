@@ -1,19 +1,7 @@
-import { NativeModules, DeviceEventEmitter } from 'react-native'
+import { NativeModules } from 'react-native'
 
 const { RNAndroidNotificationListener } = NativeModules
-const NotificationListener = {}
 
-NotificationListener.getPermissionStatus = () => {
-    return RNAndroidNotificationListener.getPermissionStatus()
-}
+export const RNAndroidNotificationListenerHeadlessJsName = 'RNAndroidNotificationListenerHeadlessJs'
 
-NotificationListener.requestPermission = () => {
-    return RNAndroidNotificationListener.requestPermission()
-}
-
-NotificationListener.onNotificationReceived = callback => {
-    DeviceEventEmitter.removeAllListeners('notificationReceived')
-    return DeviceEventEmitter.addListener('notificationReceived', callback)
-}
-
-export default NotificationListener
+export default RNAndroidNotificationListener
