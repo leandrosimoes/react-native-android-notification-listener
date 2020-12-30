@@ -6,7 +6,7 @@ React Native Android Notification Listener is a library that allows you to liste
 [![npm version](https://badge.fury.io/js/react-native-android-notification-listener.svg)](https://badge.fury.io/js/react-native-android-notification-listener)
 ![Node.js Package](https://github.com/leandrosimoes/react-native-android-notification-listener/workflows/Node%2Ejs%20Package/badge.svg)
 
-### Installation
+## Installation
 
 `$ yarn add react-native-android-notification-listener`
 
@@ -14,19 +14,19 @@ or
 
 `$ npm intall react-native-android-notification-listener`
 
-### Auto linking (React Native >= 0.60)
+## Auto linking (React Native >= 0.60)
 
 For RN version >= 0.60 there is no need to link or add any configurations manually. React Native will take care of linking the library using auto link.
 
-### Manual linking (React Native < 0.60)
+## Manual linking (React Native < 0.60)
 
 RN version < 0.60 require a manual link and some manual configurations as you can see bellow
 
-#### Manual link
+### Manual link
 
 `$ react-native link react-native-android-notification-listener`
 
-#### Manual installation
+### Manual installation
 
 Some of this configurations will be automatically handled by the manual link process, but it is rightly recomended to check manually each file to ensure that everything is properly configured.
 
@@ -43,7 +43,7 @@ Some of this configurations will be automatically handled by the manual link pro
     compile project(':react-native-android-notification-listener')
     ```
 
-### Usage
+## Usage
 
 ```javascript
 import { AppRegistry } from 'react-native'
@@ -81,7 +81,7 @@ AppRegistry.registerHeadlessTask(RNAndroidNotificationListenerHeadlessJsName,	()
 
 For more details, se the `sample/` project in this repository
 
-### FAQ
+## FAQ
 
 "There are some limitations regarding the use of the Headless JS by this module that I should care about?"
 
