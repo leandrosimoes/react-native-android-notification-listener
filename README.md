@@ -61,7 +61,10 @@ const headlessNotificationListener = async (notification) => {
  * 
  * Your entry file (index.js) would be the better place for it.
  */
-AppRegistry.registerHeadlessTask('RNAndroidNotificationListenerHeadlessJs',	() => headlessNotificationListener)
+AppRegistry.registerHeadlessTask(
+	'RNAndroidNotificationListenerHeadlessJs', 
+	() => headlessNotificationListener
+)
 ```
 
 For more details, se the `sample/` project in this repository
