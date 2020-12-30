@@ -31,7 +31,7 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String title = titleChars.toString();
         String text = textChars.toString();
 
-        if (text == null || text == "" || title == null || title == "") return;
+        if (text == null || "".equals(text) || title == null || "".equals(title)) return;
 
         Log.d(TAG, "Notification received: " + app + " | " + title + " | " + text);
         

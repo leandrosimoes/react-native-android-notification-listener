@@ -9,7 +9,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 
-import java.util.List;
 import java.util.Set;
 
 public class RNAndroidNotificationListenerModule extends ReactContextBaseJavaModule {

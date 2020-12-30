@@ -1,5 +1,6 @@
 import { AppRegistry } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { RNAndroidNotificationListenerHeadlessJsName } from 'react-native-android-notification-listener'
 
 import App from './App'
 import { name as appName } from './app.json'
@@ -24,7 +25,7 @@ const headlessNotificationListener = async notification => {
  * modules are required.
  */
 AppRegistry.registerHeadlessTask(
-    'RNAndroidNotificationListenerHeadlessJs',
+    RNAndroidNotificationListenerHeadlessJsName,
     () => headlessNotificationListener
 )
 
