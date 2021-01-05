@@ -1,0 +1,6 @@
+---
+exclude_paths:
+  - '.github/**'
+  - '.vscode/**'
+  - 'sample/**'
+  - '**.md'
