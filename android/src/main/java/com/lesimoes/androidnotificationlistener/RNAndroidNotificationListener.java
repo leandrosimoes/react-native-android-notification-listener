@@ -26,30 +26,66 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String packageName = sbn.getPackageName();
 
         CharSequence titleChars = notification.extras.getCharSequence(Notification.EXTRA_TITLE);
+        CharSequence titleBigChars = notification.extras.getCharSequence(Notification.EXTRA_TITLE_BIG);
         CharSequence textChars = notification.extras.getCharSequence(Notification.EXTRA_TEXT);
+        CharSequence subTextChars = notification.extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
+        CharSequence summaryTextChars = notification.extras.getCharSequence(Notification.EXTRA_SUMMARY_TEXT);
         CharSequence bigTextChars = notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
+        CharSequence audioContentsURIChars = notification.extras.getCharSequence(Notification.EXTRA_AUDIO_CONTENTS_URI);
+        CharSequence imageBackgroundURIChars = notification.extras.getCharSequence(Notification.EXTRA_BACKGROUND_IMAGE_URI);
+        CharSequence extraInfoChars = notification.extras.getCharSequence(Notification.EXTRA_INFO_TEXT);
         CharSequence[] lines = notification.extras.getCharSequenceArray(Notification.EXTRA_TEXT_LINES);
 
         String app = "Unknown App";
         String title = "";
+        String titleBig = "";
         String text = "";
+        String subText = "";
+        String summaryText = "";
         String bigText = "";
         String groupedMessages = "";
+        String audioContentsURI = "";
+        String imageBackgroundURI = "";
+        String extraInfoText = "";
 
         if (packageName != null && !TextUtils.isEmpty(packageName)) {
-            app = packageName.toString().trim();
+            app = packageName.trim();
         }
         
         if (titleChars != null) {
             title = titleChars.toString().trim();
+        }
+        
+        if (titleBigChars != null) {
+            titleBig = titleBigChars.toString().trim();
         }
 
         if (textChars != null) {
             text = textChars.toString().trim();
         }
 
+        if (subTextChars != null) {
+            subText = subTextChars.toString().trim();
+        }
+
+        if (summaryTextChars != null) {
+            summaryText = summaryTextChars.toString().trim();
+        }
+
         if (bigTextChars != null) {
             bigText = bigTextChars.toString().trim();
+        }
+
+        if (audioContentsURIChars != null) {
+            audioContentsURI = audioContentsURIChars.toString().trim();
+        }
+
+        if (imageBackgroundURIChars != null) {
+            imageBackgroundURI = imageBackgroundURI.toString().trim();
+        }
+
+        if (extraInfoChars != null) {
+            extraInfoText = extraInfoChars.toString().trim();
         }
 
         if (lines != null && lines.length > 0) { 
@@ -67,32 +103,21 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
             groupedMessages = sb.toString().trim(); 
         }
 
-        if (TextUtils.isEmpty(title) && TextUtils.isEmpty(text) && TextUtils.isEmpty(bigText) && TextUtils.isEmpty(groupedMessages)) {
-            Log.d(TAG, "The notification received has no valid data");
-            return;
-        }
-        
         Context context = getApplicationContext();
 
         Intent serviceIntent = new Intent(context, RNAndroidNotificationListenerHeadlessJsTaskService.class);
 
-        Log.d(TAG, "Notification received: " + app + " | " + title + " | " + text);
-
         serviceIntent.putExtra("app", app);
         serviceIntent.putExtra("title", title);
+        serviceIntent.putExtra("titleBig", titleBig);
         serviceIntent.putExtra("text", text);
-
-        if (!TextUtils.isEmpty(groupedMessages)) {
-            Log.d(TAG, "Grouped Messages: \r\r" + groupedMessages);
-
-            serviceIntent.putExtra("groupedMessages", groupedMessages); 
-        }
-
-        if (!TextUtils.isEmpty(bigText)) { 
-            Log.d(TAG, "Big Text: \r\r" + bigText);
-
-            serviceIntent.putExtra("bigText", bigText); 
-        }
+        serviceIntent.putExtra("subText", subText);
+        serviceIntent.putExtra("summaryText", summaryText);
+        serviceIntent.putExtra("groupedMessages", groupedMessages); 
+        serviceIntent.putExtra("bigText", bigText); 
+        serviceIntent.putExtra("audioContentsURI", audioContentsURI); 
+        serviceIntent.putExtra("imageBackgroundURI", imageBackgroundURI); 
+        serviceIntent.putExtra("extraInfoText", extraInfoText); 
 
         HeadlessJsTaskService.acquireWakeLockNow(context);
 

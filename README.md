@@ -61,7 +61,21 @@ RNAndroidNotificationListener.requestPermission()
  * Is that why I'm using a async function here.
  */
 const headlessNotificationListener = async (notification) => {
-	const { app, title, text, bigText, groupedMessages } = notification
+    // Note that this properties depends on the sender configuration
+    // so many times a lot of them will be empty
+	const {
+        app, 
+        title, 
+        titleBig, 
+        text, 
+        subText,
+        summaryText,
+        bigText, 
+        audioContentsURI,
+        imageBackgroundURI,
+        extraInfoText,
+        groupedMessages
+    } = notification
 
 	...
 }

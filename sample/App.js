@@ -71,11 +71,13 @@ const App = () => {
             {lastNotification && (
                 <View style={styles.notification}>
                     <Text style={styles.notificationTitle}>Last Notification</Text>
-                    <Text>{lastNotification.app}</Text>
-                    <Text>{lastNotification.title}</Text>
-                    <Text>{lastNotification.text}</Text>
-                    <Text>{lastNotification.bigText}</Text>
-                    <Text>{lastNotification.groupedMessages}</Text>
+                    {Object.keys(lastNotification).map((key, index) => {
+                        if (!lastNotification[key]) return null
+
+                        return (
+                            <Text key={index.toString()}>{`${key}: ${lastNotification[key]}`}</Text>
+                        )
+                    })}
                 </View>
             )}
         </SafeAreaView>
