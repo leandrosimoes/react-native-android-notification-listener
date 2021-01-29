@@ -47,7 +47,7 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String audioContentsURI = "";
         String imageBackgroundURI = "";
         String extraInfoText = "";
-		      JSONArray messages_array = new JSONArray();
+		JSONArray messages_array = new JSONArray();
 		
         if (packageName != null && !TextUtils.isEmpty(packageName)) {
             app = packageName.trim();
@@ -90,25 +90,24 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         }
 
         if (lines != null && lines.length > 0) { 
-
-			     try {   
-        for (CharSequence line : lines) {
-				    JSONObject item = new JSONObject();
-        if (!TextUtils.isEmpty(line)) {
-				    String Newline = line.toString().trim();
-				    int iend = Newline.indexOf(":");
-				    if (iend != -1) {
-        item.put("title",Newline.substring(0 , iend).trim());
-	       item.put("Text", Newline.substring(iend + 1).trim());
-        }
-        else{
-				    item.put("Text",Newline);
-				    }
-        messages_array.put(item);				
-        }
-        }
-		  	   }
-				    catch(JSONException e){} 
+           try {   
+            for (CharSequence line : lines) {
+				JSONObject item = new JSONObject();
+                if (!TextUtils.isEmpty(line)) {
+				String Newline = line.toString().trim();
+				int iend = Newline.indexOf(":");
+				if (iend != -1) {
+                item.put("title",Newline.substring(0 , iend).trim());
+	            item.put("Text", Newline.substring(iend + 1).trim());
+                }
+                else{
+				item.put("Text",Newline);
+				}
+                messages_array.put(item);				
+                }
+               }
+		  	}
+			catch(JSONException e){} 
         }
 
         Context context = getApplicationContext();
