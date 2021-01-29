@@ -1,4 +1,3 @@
- 
 package com.lesimoes.androidnotificationlistener;
 
 import android.content.Intent;
@@ -8,6 +7,9 @@ import android.service.notification.StatusBarNotification;
 import android.app.Notification;
 import android.util.Log;
 import android.text.TextUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import com.facebook.react.HeadlessJsTaskService;
 
@@ -43,11 +45,11 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String subText = "";
         String summaryText = "";
         String bigText = "";
-        String groupedMessages = "";
         String audioContentsURI = "";
         String imageBackgroundURI = "";
         String extraInfoText = "";
-
+		JSONArray messages_array = new JSONArray();
+		
         if (packageName != null && !TextUtils.isEmpty(packageName)) {
             app = packageName.trim();
         }
@@ -89,18 +91,24 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         }
 
         if (lines != null && lines.length > 0) { 
-            StringBuilder sb = new StringBuilder(); 
-
-            sb.append("");
-            
+           try {   
             for (CharSequence line : lines) {
-                if (!TextUtils.isEmpty(line)) { 
-                    sb.append(line.toString()); 
-                    sb.append('\n'); 
-                } 
-            }
-
-            groupedMessages = sb.toString().trim(); 
+				JSONObject item = new JSONObject();
+                if (!TextUtils.isEmpty(line)) {
+				String Newline = line.toString().trim();
+				int iend = Newline.indexOf(":");
+				if (iend != -1) {
+                item.put("title",Newline.substring(0 , iend).trim());
+	            item.put("Text", Newline.substring(iend + 1).trim());
+                }
+                else{
+				item.put("Text",Newline);
+				}
+                messages_array.put(item);				
+                }
+               }
+		  	}
+			catch(JSONException e){} 
         }
 
         Context context = getApplicationContext();
@@ -113,7 +121,7 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         serviceIntent.putExtra("text", text);
         serviceIntent.putExtra("subText", subText);
         serviceIntent.putExtra("summaryText", summaryText);
-        serviceIntent.putExtra("groupedMessages", groupedMessages); 
+        serviceIntent.putExtra("groupedMessages", messages_array.toString()); 
         serviceIntent.putExtra("bigText", bigText); 
         serviceIntent.putExtra("audioContentsURI", audioContentsURI); 
         serviceIntent.putExtra("imageBackgroundURI", imageBackgroundURI); 
