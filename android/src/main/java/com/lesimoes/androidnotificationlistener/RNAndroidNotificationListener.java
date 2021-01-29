@@ -47,7 +47,7 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
         String audioContentsURI = "";
         String imageBackgroundURI = "";
         String extraInfoText = "";
-		JSONArray messages_array = new JSONArray();
+     JSONArray messages_array = new JSONArray();
 		
         if (packageName != null && !TextUtils.isEmpty(packageName)) {
             app = packageName.trim();
