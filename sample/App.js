@@ -74,6 +74,8 @@ const App = () => {
                     <Text>{lastNotification.app}</Text>
                     <Text>{lastNotification.title}</Text>
                     <Text>{lastNotification.text}</Text>
+                    <Text>{lastNotification.bigText}</Text>
+                    <Text>{lastNotification.groupedMessages}</Text>
                 </View>
             )}
         </SafeAreaView>
