@@ -60,24 +60,39 @@ RNAndroidNotificationListener.requestPermission()
  * Note that this method MUST return a Promise.
  * Is that why I'm using a async function here.
  */
-const headlessNotificationListener = async (notification) => {
-    // Note that this properties depends on the sender configuration
-    // so many times a lot of them will be empty
-	const {
-        app, 
-        title, 
-        titleBig, 
-        text, 
-        subText,
-        summaryText,
-        bigText, 
-        audioContentsURI,
-        imageBackgroundURI,
-        extraInfoText,
-        groupedMessages
-    } = notification
-
-	...
+const headlessNotificationListener = async ({ notification }) => {/**
+     * This notification is a JSON string in the follow format:
+     *  {
+     *      "app": string,
+     *      "title": string,
+     *      "titleBig": string,
+     *      "text": string,
+     *      "subText": string,
+     *      "summaryText": string,
+     *      "bigText": string,
+     *      "audioContentsURI": string,
+     *      "imageBackgroundURI": string,
+     *      "extraInfoText": string,
+     *      "groupedMessages": Array<Object> [
+     *          {
+     *              "title": string,
+     *              "text": string
+     *          }
+     *      ]
+     *  }
+     * 
+     * Note that this properties depends on the sender configuration
+     * so many times a lot of them will be empty
+     */
+    
+    if (notification) {
+        /**
+         * Here you could store the notifications in a external API.
+         * I'm using AsyncStorage here as an example.
+         */
+        
+        ...
+    }
 }
 
 /**

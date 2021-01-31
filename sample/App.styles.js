@@ -1,14 +1,24 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
+
+const { height } = Dimensions.get('screen')
+const FORM_HEIGHT = 250
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        height: FORM_HEIGHT,
+        marginTop: height / 2 - FORM_HEIGHT,
     },
     permissionStatus: {
         marginBottom: 20,
         fontSize: 18,
+    },
+    notificationsWrapper: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
     },
     notification: {
         width: 300,
@@ -18,7 +28,9 @@ export default StyleSheet.create({
         borderRadius: 5,
         elevation: 2,
     },
-    notificationTitle: {
-        fontWeight: 'bold',
+    buttomWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })

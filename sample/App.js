@@ -1,11 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, Text, Button, AppState, View } from 'react-native'
+import { SafeAreaView, Text, Button, AppState, View, FlatList } from 'react-native'
 import RNAndroidNotificationListener from 'react-native-android-notification-listener'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import styles from './App.styles.js'
 
 let interval = null
+
+const Notification = ({
+    app,
+    title,
+    titleBig,
+    text,
+    subText,
+    summaryText,
+    bigText,
+    audioContentsURI,
+    imageBackgroundURI,
+    extraInfoText,
+}) => {
+    return (
+        <View style={styles.notification}>
+            <Text>{`app: ${app}`}</Text>
+            <Text>{`title: ${title}`}</Text>
+            <Text>{`text: ${text}`}</Text>
+            {!!titleBig && <Text>{`titleBig: ${titleBig}`}</Text>}
+            {!!subText && <Text>{`subText: ${subText}`}</Text>}
+            {!!summaryText && <Text>{`summaryText: ${summaryText}`}</Text>}
+            {!!bigText && <Text>{`bigText: ${bigText}`}</Text>}
+            {!!audioContentsURI && <Text>{`audioContentsURI: ${audioContentsURI}`}</Text>}
+            {!!imageBackgroundURI && <Text>{`imageBackgroundURI: ${imageBackgroundURI}`}</Text>}
+            {!!extraInfoText && <Text>{`extraInfoText: ${extraInfoText}`}</Text>}
+        </View>
+    )
+}
 
 const App = () => {
     const [hasPermission, setHasPermission] = useState(false)
@@ -34,6 +62,10 @@ const App = () => {
         const lastStoredNotification = await AsyncStorage.getItem('@lastNotification')
 
         if (lastStoredNotification) {
+            /**
+             * As the notification is a JSON string,
+             * here I just parse it
+             */
             setLastNotification(JSON.parse(lastStoredNotification))
         }
     }
@@ -56,30 +88,37 @@ const App = () => {
         }
     }, [])
 
+    const hasGroupedMessages =
+        lastNotification &&
+        lastNotification.groupedMessages &&
+        lastNotification.groupedMessages.length > 0
+
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={[styles.permissionStatus, { color: hasPermission ? 'green' : 'red' }]}>
-                {hasPermission
-                    ? 'Allowed to handle notifications'
-                    : 'NOT allowed to handle notifications'}
-            </Text>
-            <Button
-                title='Open Configuration'
-                onPress={handleOnPressPermissionButton}
-                disabled={hasPermission}
-            />
-            {lastNotification && (
-                <View style={styles.notification}>
-                    <Text style={styles.notificationTitle}>Last Notification</Text>
-                    {Object.keys(lastNotification).map((key, index) => {
-                        if (!lastNotification[key]) return null
-
-                        return (
-                            <Text key={index.toString()}>{`${key}: ${lastNotification[key]}`}</Text>
-                        )
-                    })}
-                </View>
-            )}
+            <View style={styles.buttonWrapper}>
+                <Text style={[styles.permissionStatus, { color: hasPermission ? 'green' : 'red' }]}>
+                    {hasPermission
+                        ? 'Allowed to handle notifications'
+                        : 'NOT allowed to handle notifications'}
+                </Text>
+                <Button
+                    title='Open Configuration'
+                    onPress={handleOnPressPermissionButton}
+                    disabled={hasPermission}
+                />
+            </View>
+            <View style={styles.notificationsWrapper}>
+                {lastNotification && !hasGroupedMessages && <Notification {...lastNotification} />}
+                {lastNotification && hasGroupedMessages && (
+                    <FlatList
+                        data={lastNotification.groupedMessages}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <Notification app={lastNotification.app} {...item} />
+                        )}
+                    />
+                )}
+            </View>
         </SafeAreaView>
     )
 }
