@@ -78,7 +78,9 @@ const headlessNotificationListener = async ({ notification }) => {/**
      *              "title": string,
      *              "text": string
      *          }
-     *      ]
+     *      ],
+     *      "icon": string (base64),
+     *      "image": string (base64),
      *  }
      * 
      * Note that this properties depends on the sender configuration
