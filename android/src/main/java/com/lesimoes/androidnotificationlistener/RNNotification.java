@@ -1,5 +1,6 @@
 package com.lesimoes.androidnotificationlistener;
 
+import android.graphics.BitmapFactory;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
 import android.app.Notification;
@@ -95,7 +96,7 @@ public class RNNotification {
         try {
             int iconId = notification.extras.getInt(Notification.EXTRA_SMALL_ICON);
 
-            String result = ""
+            String result = "";
 
             if (iconId <= 0) {
                 Icon iconInstance = notification.getSmallIcon();
@@ -132,8 +133,11 @@ public class RNNotification {
 
             Bitmap imageBitmap = (Bitmap) notification.extras.get(Notification.EXTRA_PICTURE);
 
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = this.calculateInSampleSize(options, 100,100);
+            options.inJustDecodeBounds = false;
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 30, outputStream);
 
             String result = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
 
@@ -142,5 +146,28 @@ public class RNNotification {
             Log.d(TAG, e.getMessage());
             return "";
         }
+    }
+
+    public int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 }
