@@ -8,6 +8,7 @@ import styles from './App.styles.js'
 let interval = null
 
 const Notification = ({
+    time,
     app,
     title,
     titleBig,
@@ -40,6 +41,7 @@ const Notification = ({
                     <Text>{`app: ${app}`}</Text>
                     <Text>{`title: ${title}`}</Text>
                     <Text>{`text: ${text}`}</Text>
+                    {!!time && <Text>{`time: ${time}`}</Text>}
                     {!!titleBig && <Text>{`titleBig: ${titleBig}`}</Text>}
                     {!!subText && <Text>{`subText: ${subText}`}</Text>}
                     {!!summaryText && <Text>{`summaryText: ${summaryText}`}</Text>}

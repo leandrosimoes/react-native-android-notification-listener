@@ -33,6 +33,7 @@ public class RNNotification {
     protected String extraInfoText;
     protected String icon;
     protected String image;
+    protected String time;
 
     public RNNotification(Context context, StatusBarNotification sbn) {
         Notification notification = sbn.getNotification();
@@ -40,6 +41,7 @@ public class RNNotification {
         if (notification != null && notification.extras != null) {
             String packageName = sbn.getPackageName();
 
+            this.time = Long.toString(sbn.getPostTime());
             this.app = TextUtils.isEmpty(packageName) ? "Unknown App" : packageName;
             this.title = this.getPropertySafely(notification, Notification.EXTRA_TITLE);
             this.titleBig = this.getPropertySafely(notification, Notification.EXTRA_TITLE_BIG);
