@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, Text, Button, AppState, View, FlatList } from 'react-native'
+import { SafeAreaView, Text, Image, Button, AppState, View, FlatList } from 'react-native'
 import RNAndroidNotificationListener from 'react-native-android-notification-listener'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -8,6 +8,7 @@ import styles from './App.styles.js'
 let interval = null
 
 const Notification = ({
+    time,
     app,
     title,
     titleBig,
@@ -18,19 +19,40 @@ const Notification = ({
     audioContentsURI,
     imageBackgroundURI,
     extraInfoText,
+    icon,
+    image,
 }) => {
     return (
-        <View style={styles.notification}>
-            <Text>{`app: ${app}`}</Text>
-            <Text>{`title: ${title}`}</Text>
-            <Text>{`text: ${text}`}</Text>
-            {!!titleBig && <Text>{`titleBig: ${titleBig}`}</Text>}
-            {!!subText && <Text>{`subText: ${subText}`}</Text>}
-            {!!summaryText && <Text>{`summaryText: ${summaryText}`}</Text>}
-            {!!bigText && <Text>{`bigText: ${bigText}`}</Text>}
-            {!!audioContentsURI && <Text>{`audioContentsURI: ${audioContentsURI}`}</Text>}
-            {!!imageBackgroundURI && <Text>{`imageBackgroundURI: ${imageBackgroundURI}`}</Text>}
-            {!!extraInfoText && <Text>{`extraInfoText: ${extraInfoText}`}</Text>}
+        <View style={styles.notificationWrapper}>
+            <View style={styles.notification}>
+                <View style={styles.imagesWrapper}>
+                    {!!icon && (
+                        <View style={styles.notificationIconWrapper}>
+                            <Image source={{ uri: icon }} style={styles.notificationIcon} />
+                        </View>
+                    )}
+                    {!!image && (
+                        <View style={styles.notificationImageWrapper}>
+                            <Image source={{ uri: image }} style={styles.notificationImage} />
+                        </View>
+                    )}
+                </View>
+                <View style={styles.notificationInfoWrapper}>
+                    <Text>{`app: ${app}`}</Text>
+                    <Text>{`title: ${title}`}</Text>
+                    <Text>{`text: ${text}`}</Text>
+                    {!!time && <Text>{`time: ${time}`}</Text>}
+                    {!!titleBig && <Text>{`titleBig: ${titleBig}`}</Text>}
+                    {!!subText && <Text>{`subText: ${subText}`}</Text>}
+                    {!!summaryText && <Text>{`summaryText: ${summaryText}`}</Text>}
+                    {!!bigText && <Text>{`bigText: ${bigText}`}</Text>}
+                    {!!audioContentsURI && <Text>{`audioContentsURI: ${audioContentsURI}`}</Text>}
+                    {!!imageBackgroundURI && (
+                        <Text>{`imageBackgroundURI: ${imageBackgroundURI}`}</Text>
+                    )}
+                    {!!extraInfoText && <Text>{`extraInfoText: ${extraInfoText}`}</Text>}
+                </View>
+            </View>
         </View>
     )
 }

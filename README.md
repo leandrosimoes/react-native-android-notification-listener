@@ -63,6 +63,7 @@ RNAndroidNotificationListener.requestPermission()
 const headlessNotificationListener = async ({ notification }) => {/**
      * This notification is a JSON string in the follow format:
      *  {
+     *      "time": string,
      *      "app": string,
      *      "title": string,
      *      "titleBig": string,
@@ -78,7 +79,9 @@ const headlessNotificationListener = async ({ notification }) => {/**
      *              "title": string,
      *              "text": string
      *          }
-     *      ]
+     *      ],
+     *      "icon": string (base64),
+     *      "image": string (base64), // WARNING! THIS MAY NOT WORK FOR SOME APPLICATIONS SUCH TELEGRAM AND WHATSAPP
      *  }
      * 
      * Note that this properties depends on the sender configuration

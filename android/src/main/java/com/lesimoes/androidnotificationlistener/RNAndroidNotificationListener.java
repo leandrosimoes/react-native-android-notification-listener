@@ -27,7 +27,7 @@ public class RNAndroidNotificationListener extends NotificationListenerService {
 
         Intent serviceIntent = new Intent(context, RNAndroidNotificationListenerHeadlessJsTaskService.class);
 
-        RNNotification notification = new RNNotification(sbn);
+        RNNotification notification = new RNNotification(context, sbn);
 
         Gson gson = new Gson();
         String serializedNotification = gson.toJson(notification);
