@@ -82,7 +82,7 @@ public class RNNotification {
                 for (CharSequence line : lines) {
                     if (!TextUtils.isEmpty(line)) {
                         RNGroupedNotification groupedNotification = new RNGroupedNotification(this, line);
-                        this.groupedMessages.add(groupedNotification);
+                        result.add(groupedNotification);
                     }
                 }
             }
