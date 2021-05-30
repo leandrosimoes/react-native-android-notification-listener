@@ -52,8 +52,8 @@ public class RNNotification {
             this.audioContentsURI = this.getPropertySafely(notification, Notification.EXTRA_AUDIO_CONTENTS_URI);
             this.imageBackgroundURI = this.getPropertySafely(notification, Notification.EXTRA_BACKGROUND_IMAGE_URI);
             this.extraInfoText = this.getPropertySafely(notification, Notification.EXTRA_INFO_TEXT);
-            this.iconLarge = this.getNotificationLargeIcon(context, notification, packageName);
-            this.icon = this.getNotificationIcon(context, notification, packageName);
+            this.iconLarge = this.getNotificationLargeIcon(context, notification);
+            this.icon = this.getNotificationIcon(context, notification);
             this.image = this.getNotificationImage(notification);
             this.groupedMessages = this.getGroupedNotifications(notification);
         } else {
@@ -94,7 +94,7 @@ public class RNNotification {
         }
     }
 
-    private String getNotificationIcon(Context context, Notification notification, String packageName) {
+    private String getNotificationIcon(Context context, Notification notification) {
         try {
            
             String result = "";
@@ -117,7 +117,7 @@ public class RNNotification {
     }
     
     
-    private String getNotificationLargeIcon(Context context, Notification notification, String packageName) {
+    private String getNotificationLargeIcon(Context context, Notification notification) {
         try {
             
             String result = "";
