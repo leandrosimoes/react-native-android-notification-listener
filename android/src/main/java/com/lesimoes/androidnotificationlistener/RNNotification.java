@@ -121,15 +121,14 @@ public class RNNotification {
             
             String result = "";
  
-                Icon iconInstance = notification.getLargeIcon();
-                Drawable iconDrawable = iconInstance.loadDrawable(context);
-                Bitmap iconBitmap = ((BitmapDrawable) iconDrawable).getBitmap();
+            Icon iconInstance = notification.getLargeIcon();
+            Drawable iconDrawable = iconInstance.loadDrawable(context);
+            Bitmap iconBitmap = ((BitmapDrawable) iconDrawable).getBitmap();
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                iconBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            iconBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 
-                result = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
-             
+            result = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
 
             return TextUtils.isEmpty(result) ? result : "data:image/png;base64," + result;
         } catch (Exception e) {
