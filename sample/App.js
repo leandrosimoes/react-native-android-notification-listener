@@ -21,6 +21,7 @@ const Notification = ({
     extraInfoText,
     icon,
     image,
+    iconLarge
 }) => {
     return (
         <View style={styles.notificationWrapper}>
@@ -34,6 +35,11 @@ const Notification = ({
                     {!!image && (
                         <View style={styles.notificationImageWrapper}>
                             <Image source={{ uri: image }} style={styles.notificationImage} />
+                        </View>
+                    )}
+                    {!!iconLarge && (
+                        <View style={styles.notificationImageWrapper}>
+                            <Image source={{ uri: iconLarge }} style={styles.notificationImage} />
                         </View>
                     )}
                 </View>
