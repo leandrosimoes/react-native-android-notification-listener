@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
     "react": "16.9.0",
-    "react-native": "0.61.2",
+    "react-native": "0.62.3",
     "react-native-android-notification-listener": "../"
   },
   "devDependencies": {
